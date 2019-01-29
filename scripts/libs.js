@@ -637,8 +637,7 @@ function passwordRenewCheckUpdate() {
           requestflag = false;
           sendcompleteflag = false;
           alert(errNoPermission);
-            // window.setTimeout("window.close()", 1) ;
-            move_login_page();
+          window.setTimeout("window.close()", 1) ;
 
           return;
         }

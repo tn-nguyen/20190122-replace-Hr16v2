@@ -288,7 +288,7 @@ $z.c({
 
     },
     passwdRuleCheck: function(str, id) {
-      var err = Validator.enhancedPasswd2(str, id);
+      var err = Validator.enhancedPasswd(str, id);
       if (err & Validator.ERR_VALID_LENGTH_SHORT ||
           err & Validator.ERR_VALID_LENGTH_LONG) {
         $('#passwd_rule1').css('color', 'red');
@@ -312,6 +312,18 @@ $z.c({
         $('#passwd_rule4').css('color', 'red');
       } else {
         $('#passwd_rule4').css('color', 'green');
+      }
+
+      if (err & Validator.ERR_VALID_EQUAL_TO_ID) {
+        $('#passwd_rule5').css('color', 'red');
+      } else {
+        $('#passwd_rule5').css('color', 'green');
+      }
+
+      if (err & Validator.EER_VALID_INVALID_CHAR) {
+        $('#passwd_rule6').css('color', 'red');
+      } else {
+        $('#passwd_rule6').css('color', 'green');
       }
     },
     useridRuleCheck: function(str, id) {
@@ -368,7 +380,7 @@ $z.c({
         }
 
         if (INFO_ENHANCED_PASSWORD == '1') {
-          err = Validator.enhancedPasswd2(passwd, id);
+          err = Validator.enhancedPasswd(passwd, id);
         } else {
           err = Validator.test("usrPasswd", passwd, 1, 16);
         }

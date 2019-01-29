@@ -96,7 +96,6 @@ var INFO_COVERT = 0;
 var INFO_LIVEAUDIOCH;
 var INFO_CAMTITLE_ON = 1;
 var INFO_EVENTICON_ON = 1;
-var INFO_USE_VIDEO_ENCODER = 0;
 
 var INFO_CMP_DVRREADY = 0;
 var INFO_CMP_DISCONNECTRESON = 0;
@@ -3391,81 +3390,3 @@ function clearFwUpdateStatus() {
     }
   });
 }
-
-/*********************************************************
- function : move_login_page()
- description : 
-***********************************************************/
-function move_login_page() {
-    setCookie("ISESSIONID", "", 0);
-    self.location="/login.htm";
-}
-
-/*********************************************************
- function : global_entry_init()
- description : This function is for managing JS method integrally.
-***********************************************************/
-function global_entry_init(type) {
-    // type is reserved variable
-    session_check();
-}
-
-/*********************************************************
- function : session_check()
- description : 
-***********************************************************/
-var session_check_timer = null;
-var session_error_count;
-function session_check() {
-    session_error_count = 0;
-    session_check_timer = setInterval(_calling_session_check, 5000);
-}
-
-function _calling_session_check() {
-    var session = getCookie("ISESSIONID");
-    var action = "action=session&menu=check&sessionid="+session;
-
-    $.ajax({
-        url: "/cgi-bin/webra_fcgi.fcgi",
-        type: 'POST',
-        data: action,
-        success: function(response) {
-            session_error_count = 0;
-
-            if(response == "No Permission Error!") {
-                move_login_page();
-                return;
-            }
-            if(response == "Password is not initiallized!") {
-                move_login_page();
-                return;
-            }
-
-            var tmp = response.replace(/^&+/, "");;
-
-            var array = encode_to_array(tmp);
-
-            if(array["return_code"] != 200) {
-                move_login_page();
-            }
-        },
-        error: function(response) {
-            if(session_error_count > 3) {
-                alert("Session expired");
-                move_login_page();
-            }
-            else {
-                session_error_count++;
-            }
-        }
-    });
-}
-
-
-
-
-
-
-
-
-

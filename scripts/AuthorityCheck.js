@@ -188,7 +188,7 @@ var AuthCheck = function(data, skip) {
 
             //password valid check.
             if(Validator.usrPasswd(pre_password)
-              || Validator.enhancedPasswd2('#new_password','#new_password')//Validator.usrPasswd(new_password)
+              || Validator.usrPasswd(new_password)
               || Validator.usrPasswd(confirm_password))
             {
               //alert(langArray['LTXT_ERR_USERPASSWD']);

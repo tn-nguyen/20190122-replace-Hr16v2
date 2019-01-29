@@ -360,12 +360,6 @@ $z.v({
             }
           }
 
-          if(INFO_USE_VIDEO_ENCODER) {
-              $(".video_recoder").hide();
-          }
-          else {
-              $(".video_recoder").show();
-          }
         },
         update: function(arr) {
           var my = this;
@@ -644,13 +638,6 @@ $z.v({
             if (INFO_VENDOR === 'ALSOK' || INFO_VENDOR == 'TAKENAKA') {
                 $(".ftp").hide();
                 $('.colspan').attr('colspan', 7);
-            }
-
-            if(INFO_USE_VIDEO_ENCODER) {
-                $(".event_recoder").hide();
-            }
-            else {
-                $(".event_recoder").show();
             }
 
         },
@@ -1010,13 +997,6 @@ $z.v({
             $(".ftp").hide();
             $('.colspan').attr('colspan', 5);
           }
-
-          if(INFO_USE_VIDEO_ENCODER) {
-              $(".event_recoder").hide();
-          }
-          else {
-              $(".event_recoder").show();
-          }
         },
 
         updateInterval: function(ch, val) {
@@ -1283,7 +1263,7 @@ $z.v({
               $(".vlossIgnoreInterval").show();
               $("table.event_vloss col.col2").css("width", "23%");
               $("table.event_vloss col.col3").css("width", "20%");
-              $("table.event_vloss col.col4").css("width", "20%");
+              $("table.event_vloss col.col4").css("width", "6%");
             }
 
             $('input:button.c_sp_btn_okcancel').click( function () {
@@ -1966,14 +1946,6 @@ $z.v({
             $(".network_colspan").attr('colspan', parseInt($(".network_colspan").attr('colspan'))+1);
           }
 
-          if(INFO_USE_VIDEO_ENCODER) {
-              $(".event_recoder").hide();
-              $("#a_event_sys").click();
-              $(".network_colspan").attr('colspan', parseInt($(".network_colspan").attr('colspan'))-1);
-          }
-          else {
-              $(".event_recoder").show();
-          }
         },
         update: function(arr) {
             var c = $z.current;

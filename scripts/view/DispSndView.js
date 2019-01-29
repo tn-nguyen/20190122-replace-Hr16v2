@@ -22,13 +22,6 @@ $z.v({
             if( INFO_VENDOR == 'ALSOK' || INFO_VENDOR == 'TAKENAKA') {
               $('.remove_alsok').hide();
             }
-
-            if(INFO_USE_VIDEO_ENCODER) {
-                $(".video_recoder").hide();
-            }
-            else {
-                $(".video_recoder").show();
-            }
     
         },
         update: function(array) {
@@ -150,13 +143,6 @@ $z.v({
         $('#mic').attr('disabled', 'disabled');
         $('#netaudiotrans').attr('disabled', 'disabled');
         $('#netaudiorecv').attr('disabled', 'disabled');
-      }
-
-      if(INFO_USE_VIDEO_ENCODER) {
-        $(".video_recoder").hide();
-      }
-      else {
-        $(".video_recoder").show();
       }
     },
     update: function(array) {

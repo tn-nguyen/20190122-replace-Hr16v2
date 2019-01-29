@@ -1160,23 +1160,10 @@ function lang_part(part) {
       str += '$value&SUBMIT='+ langArray['LTXT_SETUP_APPLY'];
       return str;
     } else if (part == "REDIRECT") {
-      str += '$span&lang_password_title=' + langArray['LTXT_PASSWORD_SETTINGS'];
       str += '$span&lang_password=' + langArray['LTXT_PASSWORD_CHECK'];
       str += '$span&lang_new_password=' + langArray['LTXT_NEW_PASSWORD'];
-      str += '$span&lang_confirm_password=' + langArray['LTXT_CONFIRM_PASSWORD'];
-      str += '$span&password_rules_1=1. ' + langArray['LTXT_SETUPUSER_PASSWDRULE1'];
-      str += '$span&password_rules_2=2. ' + langArray['LTXT_SETUPUSER_PASSWDRULE2_I3'];
-      str += '$span&password_rules_3=3. ' + langArray['LTXT_SETUPUSER_PASSWDRULE6'];
-      str += '$value&lang_set_password=' + langArray['LTXT_SET_PASSWORD'];
-
+      str += '$span&lang_confirm_password=' + langArray['LTXT_CONFIRM_NEW_PASSWORD'];
       return str;
-    } else if (part == 'LOGIN') {
-        str += '$span&langUserId=' + langArray['LTXT_SETUPUSER_USERID'];
-        str += '$span&langPassword=' + langArray['LTXT_SETUPUSER_PASSWD'];
-        str += '$value&Login=' + langArray['LTXT_SETUPUSER_LOGIN'];
-        str += '$value&lang_login_forgot_password=' + langArray['LTXT_LOGIN_FORGOT_PASSWORD'];
-        return str;
-        
     } else if (part == 'SEARCH') {
         ///////////////////// Text //////////////////////////////////
         str = lang_TopMenu();
@@ -2116,18 +2103,6 @@ function lang_part(part) {
           str += '$value&FACTORY='+           langArray['LTXT_SETUPSYSMANAGE_LOAD'];
         }
 
-        if( ( INFO_MODEL.indexOf('UTM5HG') >= 0 ) && ( INFO_VENDOR=='I3DVR' ) ){
-          str += '$span&lang_reboot='+           langArray['LTXT_SETUPSYSMANAGE_RESET'];
-          str += '$span&lang_btn_reboot='+           langArray['LTXT_SETUPSYSMANAGE_RESET_BTN'];
-          str += '$span&lang_factory_default='+           langArray['LTXT_SETUPSYSMANAGE_FACTORYRESET'];
-          str += '$span&lang_hard_factory_reset='+           langArray['LTXT_SETUPSYSMANAGE_HARDFACTORYRESET'];
-          str += '$value&RESTART=' + langArray['LTXT_SETUPCAMINSTALLATION_CAMERA_CONFIG_RESET'];
-        }else{
-          str += '$span&lang_reboot='+           langArray['LTXT_SETUPSYSMANAGE_REBOOT'];
-          str += '$span&lang_btn_reboot='+           langArray['LTXT_SETUPSYSMANAGE_REBOOT_BTN'];
-          str += '$span&lang_factory_default='+           langArray['LTXT_SETUPSYSMANAGE_FACTORYDEFAULT'];
-          str += '$value&RESTART=' + langArray['LTXT_SETUPSYSMANAGE_REBOOT_BTN'];
-        }
 
 
         str += '$span&lang_confirm_password='+   langArray["LTXT_CONFIRM_PASSWORD"];
@@ -2145,13 +2120,17 @@ function lang_part(part) {
         str += '$span&lang_ddnsstatus=' + langArray['LTXT_SETUPSYSMANAGE_DDNSSTATUS'];
         str += '$span&lang_poelimit=' + langArray['LTXT_SETUPSYSMANAGE_POELIMIT'];
         str += '$span&lang_powerfreq=' + langArray['LTXT_SETUPSYSMANAGE_POWERFREQ'];
+        str += '$span&lang_factory_default='+           langArray['LTXT_SETUPSYSMANAGE_FACTORYDEFAULT'];
         str += '$span&lang_systemdata='+           langArray['LTXT_SETUPSYSMANAGE_SYSTEMDATA'];
         str += '$span&lang_fac_message='+           langArray['LTXT_SETUPSYSMANAGE_FAC_MESSAGE'];
-        str += '$span&lang_hard_fac_message='+           langArray['LTXT_SETUPSYSMANAGE_HARD_FAC_MESSAGE'];
         str += '$span&lang_save='+           langArray['LTXT_SETUPSYSMANAGE_SAVE'];
         str += '$span&lang_load='+           langArray['LTXT_SETUPSYSMANAGE_LOAD'];
+        str += '$span&lang_reboot='+           langArray['LTXT_SETUPSYSMANAGE_REBOOT'];
+        str += '$span&lang_btn_reboot='+           langArray['LTXT_SETUPSYSMANAGE_REBOOT_BTN'];
         str += '$span&lang_reboot_message='+           langArray['LTXT_SETUPSYSMANAGE_REBOOT_MESSAGE'];
         str += '$span&lang_renew_passwd='+  langArray['LTXT_RENEW_PASSWORD'];
+        str += '$span&lang_factory_reset='+           langArray['LTXT_SETUPSYSMANAGE_FACTORYRESET'];
+        str += '$span&lang_fac_reset_message='+           langArray['LTXT_SETUPSYSMANAGE_FAC_RESET_MESSAGE'];
 
 
 
@@ -2160,6 +2139,7 @@ function lang_part(part) {
         str += '$value&lang_save=' + langArray['LTXT_SETUPSYSMANAGE_FWUP'];
         str += '$value&lang_load=' + langArray['LTXT_SETUPSYSMANAGE_LOAD'];
         str += '$value&UPGRADE=' + langArray['LTXT_SETUPSYSMANAGE_FWUP'];
+        str += '$value&RESTART=' + langArray['LTXT_SETUPSYSMANAGE_REBOOT_BTN'];
         str += '$value&VERIFY=' + langArray['LTXT_VERIFY_INTEGRITY'];
         str += '$value&YES=' + langArray['LTXT_OK'];
         str += '$value&NO=' + langArray['LTXT_CANCEL'];
@@ -2281,22 +2261,14 @@ function lang_part(part) {
         str += '$span&passwd_rule1='+ '(1)' +    langArray['LTXT_SETUPUSER_PASSWDRULE1'];
         if(INFO_VENDOR.indexOf("VIDECON") >= 0) {
           str += '$span&passwd_rule2='+ '(2)' +    langArray['LTXT_SETUPUSER_PASSWDRULE2_VIDECON'];
-        } else if(INFO_VENDOR.indexOf("I3DVR") >= 0) {
-            str += '$span&passwd_rule2='+ '(2)' +    langArray['LTXT_SETUPUSER_PASSWDRULE2_I3'];
         } else {
-            str += '$span&passwd_rule2='+ '(2)' +    langArray['LTXT_SETUPUSER_PASSWDRULE2_ENHANCE'];
+        str += '$span&passwd_rule2='+ '(2)' +    langArray['LTXT_SETUPUSER_PASSWDRULE2_ENHANCE'];
         }
-        
-        if(INFO_VENDOR.indexOf("I3DVR") >= 0) {
-            str += '$span&passwd_rule3='+ '(3)' +    langArray['LTXT_SETUPUSER_PASSWDRULE6'];
-        }
-        else {
-            str += '$span&passwd_rule3='+ '(3)' +    langArray['LTXT_SETUPUSER_PASSWDRULE3'];
-            str += '$span&passwd_rule4='+ '(4)' +    langArray['LTXT_SETUPUSER_PASSWDRULE4'];
-            str += '$span&passwd_rule5='+ '(5)' +    langArray['LTXT_SETUPUSER_PASSWDRULE5'];
-            str += '$span&passwd_rule6='+ '(6)' +    langArray['LTXT_SETUPUSER_PASSWDRULE6'];
-            str += '$span&passwd_rule7='+ '(*)' +    langArray['LTXT_ERR_USERID_LENGTH'];
-        }
+        str += '$span&passwd_rule3='+ '(3)' +    langArray['LTXT_SETUPUSER_PASSWDRULE3'];
+        str += '$span&passwd_rule4='+ '(4)' +    langArray['LTXT_SETUPUSER_PASSWDRULE4'];
+        str += '$span&passwd_rule5='+ '(5)' +    langArray['LTXT_SETUPUSER_PASSWDRULE5'];
+        str += '$span&passwd_rule6='+ '(6)' +    langArray['LTXT_SETUPUSER_PASSWDRULE6'];
+        str += '$span&passwd_rule7='+ '(*)' +    langArray['LTXT_ERR_USERID_LENGTH'];
         str += '$span&lang_confirm_password='+   langArray["LTXT_CONFIRM_PASSWORD"];
 
         ///////////////////// Value //////////////////////////////////

@@ -2793,12 +2793,6 @@ $z.v({
         $('#cv_logoff'+i).change(_changeHandlerGenerator('logoff'));
       }
 
-      if(INFO_USE_VIDEO_ENCODER) {
-        $(".video_recoder").hide();
-      }
-      else {
-        $(".video_recoder").show();
-      }
     },
     update: function(array) {
       var flag_all_checked_admin = true;

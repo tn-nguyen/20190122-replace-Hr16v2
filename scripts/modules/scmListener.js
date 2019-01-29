@@ -343,10 +343,7 @@ define(['modules/ajax'], function () {
 
     'IRET_SCM_PREPARE_FWUP_VALIDATE'    : 0x802C,
     'IRET_SCM_PREPARE_FWUP_DATABACKUP'    : 0x802D,
-    'IRET_SCM_PREPARE_FWUP_CMPL'        : 0x802E,
-
-
-    'IRET_SOFT_FACTORY_DEFAULT_NOTIFY'        : 0x8032
+    'IRET_SCM_PREPARE_FWUP_CMPL'        : 0x802E
   };
 
   WebView.SCMMSG = SCMMSG;

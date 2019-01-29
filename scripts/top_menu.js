@@ -74,7 +74,7 @@ function print_top_menu(obj, cate)
   {
     obj.write("<li "+ sub_live + "><a href='../html/live.htm'>"+sub_s_live+"<span id='lang_Live'>Live</span>"+sub_e_live+"</a></li>");
   }
-  if ( browerIE && !INFO_USE_VIDEO_ENCODER)
+  if ( browerIE )
   {	
     if (parseInt(INFO_EXISTDISK))
     {	
@@ -86,17 +86,10 @@ function print_top_menu(obj, cate)
     }
   }
 
-  obj.write("<li "+ sub_setup + "id='litopsetup'><a href='../html/setup_cam_title.htm'>"+sub_s_setup+"<span id='lang_Setup'>Setup</span>"+sub_e_setup+"</a></li>");
+  obj.write("<li "+ sub_setup + "id='litopsetup'><a href='../html/setup_cam_image.htm'>"+sub_s_setup+"<span id='lang_Setup'>Setup</span>"+sub_e_setup+"</a></li>");
   obj.write("<li "+ sub_infomation + "><a href='../html/versioninfo.htm'>"+sub_s_infomation+"<span id='lang_Infomation'>Infomation</span>"+sub_e_infomation+"</a></li>");
-    
   obj.write("</ul>");
   obj.write("</div>");
-
-  if(INFO_USE_VIDEO_ENCODER) {
-    obj.write("<div id='c_g_div_logout'>");
-    obj.write("<input type='button' value='LOGOUT' onClick='act_logout()' class='logout'/>");
-    obj.write("</div>");
-  }
   
   if(INFO_VENDOR.indexOf("I3DVR") < 0) {
     obj.write("<div id='c_g_div_title'><span><span id='lang_ANFWEBRemoteViewer'></span></span></div>");
@@ -106,21 +99,3 @@ function print_top_menu(obj, cate)
   obj.write("</div>");
 }
 
-function act_logout() {
-  var session = getCookie("ISESSIONID");
-  var isAutoLogout = 0;
-    
-  $.ajax({
-    type: "POST",
-    url: "/cgi-bin/webra_fcgi.fcgi",
-    async: false,
-    data: 'action=session&menu=logout&sessionid=' + session + '&is_auto_logout=' + isAutoLogout,
-    success: function(response) {
-      var array = encode_to_array(response);
-      move_login_page()
-    },
-    fail: function(response) {
-      move_login_page()
-    }
-  });
-}

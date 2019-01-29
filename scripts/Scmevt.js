@@ -347,17 +347,11 @@ var SCMMSG = {
   'IRET_SCM_ERASE_CH'                 : 0x801E,
   'IRET_SCM_DHCP_RENEW'               : 0x801F,
 
-  // 0x8020
   'IRET_SCM_TST_FTP'                  : 0x8020,
 
   'IRET_SCM_PREPARE_FWUP_VALIDATE'    : 0x802C,
   'IRET_SCM_PREPARE_FWUP_DATABACKUP'    : 0x802D,
-  'IRET_SCM_PREPARE_FWUP_CMPL'        : 0x802E,
-
-  // 0x8030
-
-
-  'IRET_SOFT_FACTORY_DEFAULT_NOTIFY'        : 0x8032
+  'IRET_SCM_PREPARE_FWUP_CMPL'        : 0x802E
 };
 
 (function (window, undefined) {

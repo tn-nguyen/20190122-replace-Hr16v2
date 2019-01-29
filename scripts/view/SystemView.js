@@ -225,12 +225,7 @@ $z.v({
             $(".foripx").show();
           } else if(INFO_MODEL.indexOf("UTM") >= 0) {
             $(".systemid").show();  //SYSTEM ID ON
-            
-            if( INFO_VENDOR.indexOf('I3DVR') >= 0 ) {
-              $(".fori3encoder").show();
-            }else{
-              $(".foripx").remove();
-            }
+            $(".foripx").remove();
           } else if(INFO_MODEL.indexOf("ANF") >= 0) {
             $(".systemid").show();  //SYSTEM ID ON
             $(".foripx").remove();
@@ -241,7 +236,6 @@ $z.v({
             $(".foripx").remove();
           }
 
-
           if( INFO_MODEL.indexOf("IPX") >= 0 && INFO_MODEL.indexOf("ECO") >= 0 ) {
             //$(".hideforeco").hide();
             $(".hideforeco").remove();
@@ -250,13 +244,6 @@ $z.v({
           if (INFO_VENDOR === 'ALSOK' || INFO_VENDOR === 'TAKENAKA') {
             $(".remove_alsok").hide();
           }
-
-            if(INFO_USE_VIDEO_ENCODER) {
-                $(".video_recoder").hide();
-            }
-            else {
-                $(".video_recoder").show();
-            }
         },
         update: function(array) {
           $('#passwd_enable').val(array['passwd_enable']);
@@ -268,7 +255,6 @@ $z.v({
           $('#poe_limit_hub').val(array['poe_limit_hub']);
           $('#sig_type').val(array['sig_type']);
           $('#system_id').val(array['system_id']);
-          $('#login_lock').val(array['login_lock']);
           this.passwordCheck();
           this.autoLogoutCheck();
         },
@@ -289,13 +275,7 @@ $z.v({
     },
     SystemInfo : {
         init: function() {
-            $('dt.info_model, dd.info_model').hide();
-            if(INFO_USE_VIDEO_ENCODER) {
-                $(".video_recoder").hide();
-            }
-            else {
-                $(".video_recoder").show();
-            }
+          $('dt.info_model, dd.info_model').hide();
         },
         update: function(array) {
             if( array['model'].length > 0 ) {

@@ -210,14 +210,14 @@ $z.c({
                       date_targ_t.setMinutes($z.current.m.data.min);
                       date_targ_t.setSeconds($z.current.m.data.sec);
 
-                      // if((+date_orig_t) > (+date_targ_t)) {
-                      //   me.state = 'confirm';
-                      //   $(me).dialog('option', 'title', langArray["LTXT_WARNING"]);
-                      //   $('#div_password_check').hide();
-                      //    $('#div_confirm_msg').show();
-                      //   c.updateTips('', true);
-                      // }
-                      // else {
+                      if((+date_orig_t) > (+date_targ_t)) {
+                        me.state = 'confirm';
+                        $(me).dialog('option', 'title', langArray["LTXT_WARNING"]);
+                        $('#div_password_check').hide();
+                        $('#div_confirm_msg').show();
+                        c.updateTips('', true);
+                      }
+                      else {
                         me.state = 'done';
                         $('#dialogOk').button({ disabled: true });
                         $('#dialogClose').button({ disabled: true });
@@ -275,7 +275,7 @@ $z.c({
                             return false;
                           }
                         });
-                    //}
+                      }
 
 
                       return true;
@@ -712,7 +712,8 @@ $z.c({
         autoResize: true,
         me: null,
         open: function(event, ui) {
-          me = $( this );
+          $('.ui-dialog-titlebar-close').show();
+          me = $(this);
           $('#nand_info_note').html("<" + langArray["LTXT_SYSSET_NAND_FWUP_NOTE"] + ">");
           $('#nand_info_dont_close_browser').html("1. " + langArray["LTXT_SYSSET_NAND_FWUP_NOTE_DONT_CLOSE_BROWSER"]);
           $('#nand_info_dont_close_server').html("2. " + langArray["LTXT_SYSSET_NAND_FWUP_NOTE_DONT_CLOSE_SERVER"]);
@@ -862,7 +863,7 @@ $z.c({
         modal: true,
         show: 'drop',
         hide: 'drop',
-        title: langArray["LTXT_SETUPSYSMANAGE_FACTORYRESET"],
+        title: langArray["LTXT_SETUPSYSMANAGE_FACTORYDEFAULT"],
         width: '450px',
         resizable: false,
         closeOnEscape: false,
@@ -879,14 +880,7 @@ $z.c({
             $('#dialog_pleasewait').dialog('open');
             $('#dialogFactoryOk').button({ disabled: true });
 
-            var btn_cmd = 1,
-                scm_msg = 'IRET_FACTORY_DEFAULT_NOTIFY';
-            if( ( INFO_MODEL.indexOf('UTM5HG') >= 0 ) && ( INFO_VENDOR=='I3DVR' ) ) {
-              btn_cmd = 3; // SOFT_FACTORY_DEFAULT
-              scm_msg = 'IRET_SOFT_FACTORY_DEFAULT_NOTIFY'
-            }
-
-            var action = 'action=set_setup&menu=system.btn&btn='+btn_cmd;
+            var action = 'action=set_setup&menu=system.btn&btn=1';
 
             $.ajax({
               type: "POST",
@@ -916,10 +910,8 @@ $z.c({
                   $('#dialog_pleasewait').dialog('close');
                   $('#dialog_factory_default').dialog('close');
                 }, 30000);
-                
                 $.scm.Start();
-                $.scm.RegistCallback(scm_msg, c.CbRetFactoryNotify);
-                
+                $.scm.RegistCallback('IRET_FACTORY_DEFAULT_NOTIFY', c.CbRetFactoryNotify);
                 return true;
               },
               fail: function(response) {
@@ -928,7 +920,6 @@ $z.c({
             });
           }
         },
-
         {
           text: langArray["LTXT_CANCEL"],
           click: function() {
@@ -937,154 +928,34 @@ $z.c({
         }]
       });
 
-      $('#dialog_hard_factory_default').dialog({
-        autoOpen: false,
-        modal: true,
-        show: 'drop',
-        hide: 'drop',
-        title: langArray["LTXT_SETUPSYSMANAGE_HARDFACTORYRESET"],
-        width: '450px',
-        resizable: false,
-        closeOnEscape: false,
-        autoResize: true,
-        me: null,
+        $('#dialog_factory_reset').dialog({
+            autoOpen: false,
+            modal: true,
+            show: 'drop',
+            hide: 'drop',
+            title: langArray["LTXT_SETUPSYSMANAGE_FACTORYRESET"],
+            width: '450px',
+            resizable: false,
+            closeOnEscape: false,
+            autoResize: true,
+            me: null,
 
-        open: function(event, ui) {
-          $(".ui-dialog-titlebar-close").hide();
-        },
-        buttons: [{
-          text: langArray["LTXT_OK"],
-          click: function() {
-            $(this).dialog('close');
-            $('#dialog_pleasewait').dialog({title:langArray['LTXT_SETUPSYSMANAGE_HARDFACTORYRESET']});
-            $('#dialog_pleasewait').dialog('open');
-            $('#dialogFactoryOk').button({ disabled: true });
-
-            //btn = 1 : FACTORY_DEFAULT , I3 Video Encoder에선 HARD_FACTORY_DEFAULT
-            var action = 'action=set_setup&menu=system.btn&btn=1';
-
-            $.ajax({
-              type: "POST",
-              url: "/cgi-bin/webra_fcgi.fcgi",
-              async: false,
-              data: action,
-              success: function(response) {
-                switch(response) {
-                case 'DVR In Setup!':
-                  c.updateTips(langArray["LTXT_ERR_DVRINSETUP"]);
-                  $('#dialogFactoryOk').button({ disabled: false });
-                  return;
-                case 'DVR In Arch!':
-                  c.updateTips(langArray["LTXT_ERR_DVRINARCH"]);
-                  $('#dialogFactoryOk').button({ disabled: false });
-                  return;
-                case 'DVR In Not Live!':
-                  c.updateTips(langArray['LTXT_DVR_NOT_LIVE']);
-                  $('#dialogFactoryOk').button({ disabled: false });
-                  return;
-                case 'DVR In SCM not ready!':
-                  c.updateTips(langArray['LTXT_ERR_NVR_NOT_READY']);
-                  $('#dialogFactoryOk').button({ disabled: false });
-                  return;
-                default : 
-                  response = encode_to_array(response);
-                  c.m.defaultUrl = response['url'];
-                  c.m.presentUrl = "http://"+location.host;
-
-                  clearInterval(session_check_timer);
-            
-                  if( c.m.defaultUrl == c.m.presentUrl ){
-                    alert("is same ");
-                    var preparerationCheck = function(){
-                      //check TIMEOUT and REFUSE error : default host open check
-                      $.ajax({
-                        type:'POST',
-                        url : c.m.presentUrl+'/cgi-bin/webra_fcgi.fcgi',
-                        data : {action:'dvr',menu:'dvrledon'},
-                        timeout:100,
-                        success:function(response){
-                          if( response == 'Password is not initiallized!' ){
-                            clearInterval(c.m.factoryDefaultPreparationIntervalId);
-                            setTimeout(function(){
-                              setCookie('ISESSIONID', '', 1);
-                              $(".tips").text(langArray['LTXT_ERR_SUCCESS']);
-                              $("#dialogFactoryOk").button({disabled:false}).click(function(){
-                                location.href=c.m.defaultUrl+'/login.htm';
-                              });
-                            }, 30000);
-                          }
-                        }
-                      });
-                    };
-                    c.m.factoryDefaultPreparationIntervalId = setInterval(preparerationCheck, 300);
-                  }else{
-                    var preparingDone = false;
-
-                    var preparerationCheck = function(){
-                      //check TIMEOUT and REFUSE error : default host open check
-                      $.ajax({
-                        type:'GET',
-                        url : c.m.presentUrl,
-                        timeout:500
-                      }).fail(function(){
-                          clearInterval(c.m.factoryDefaultPreparationIntervalId);
-                          setTimeout(function(){
-                            c.m.factoryDefaultDoneIntervalId = setInterval(doneCheck, 1000);
-                          }, 1000);
-                      });
-                    };
-
-                    var doneCheck = function() {
-                      $.ajax({
-                        type:'POST',
-                        url: c.m.defaultUrl,
-                        async:true,
-                        timeout:500,
-                        success: function(response){
-                          clearInterval(c.m.factoryDefaultDoneIntervalId);
-                          setTimeout(function(){
-                            setCookie('ISESSIONID', '', 1);
-                            $(".tips").text(langArray['LTXT_ERR_SUCCESS']);
-                            $("#dialogFactoryOk").button({disabled:false}).click(function(){
-                              location.href=c.m.defaultUrl+'/login.htm';
-                            });
-                          },30000);
-                        }
-                      }).fail(function(){
-                        console.log("Hard Factory Default request fail");
-                      });
-                    }
-                    c.m.factoryDefaultPreparationIntervalId = setInterval(preparerationCheck, 1000);
-                  }
-
-                  $(".tips").html(langArray['LTXT_SYSSET_NAND_FWUP_NOTE_DONT_CLOSE_BROWSER']+'<br>'+langArray['LTXT_PLEASE_WAIT']);
-
-
-                  setTimeout( function () {
-                    $('#dialog_pleasewait').dialog('close');
-                    $('#dialog_hard_factory_default').dialog('close');
-                    location.href=c.m.defaultUrl+'/login.htm';
-                  }, 60000);
-
-                  return true;
-              }
-
-                
-              },
-              fail: function(response) {
-                return false;
-              }
-            });
-          }
-        },
-        
-        {
-          text: langArray["LTXT_CANCEL"],
-          click: function() {
-            $(this).dialog('close');
-          }
-        }]
-      });
+            open: function (event, ui) {
+                $(".ui-dialog-titlebar-close").hide();
+            },
+            buttons: [{
+                text: langArray["LTXT_OK"],
+                click: function () {
+                    $(this).dialog('close');
+                }
+            },
+            {
+                text: langArray["LTXT_CANCEL"],
+                click: function () {
+                    $(this).dialog('close');
+                }
+            }]
+        });
 
 
       function reboot_progress() {
@@ -1433,9 +1304,9 @@ $z.c({
       $('#netfactorydefault').button().click( function() {
         $('#dialog_factory_default').dialog('open');
       });
-
-      $('#hardfactorydefault').button().click( function() {
-        $('#dialog_hard_factory_default').dialog('open');
+        
+      $('#swfactorydefault').button().click( function() {
+        $('#dialog_factory_reset').dialog('open');
       });
 
       $('#upgrade_yes').button().click( function () {
@@ -1494,7 +1365,7 @@ $z.c({
           return;
         }
 
-        c.v.update(array); 
+        c.v.update(array);
         c.m.initData(array);
       });
     },
@@ -1504,6 +1375,7 @@ $z.c({
       $('#dialogFactoryOk').button().click(function () {
           document.location.pathname = '/html/change_password.htm';
       });
+
     },
     CbRetSysdataLoadNotify: function (param) {
       $z.current.updateTips(langArray['LTXT_ERR_SUCCESS'], true);
